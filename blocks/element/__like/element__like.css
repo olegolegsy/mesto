@@ -4,8 +4,8 @@
 
   border: none;
 
-  width: 22px;
-  height: 19px;
+  min-width: 22px;
+  min-height: 19px;
 
   position: relative;
 
