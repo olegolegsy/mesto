@@ -5,7 +5,7 @@ let jobInput = formElement.querySelector('.popup__input-job');
 function closeForm (evt) {
   evt.preventDefault();
 
-  popup.classList.add('popup_cls')
+  popup.classList.add('popup_cls');
 }
 
 function handleFormSubmit (evt) {
@@ -20,7 +20,7 @@ function handleFormSubmit (evt) {
   profileName.textContent = name;
   profileJob.textContent = job;
 
-  closeForm();
+  popup.classList.add('popup_cls');
 }
 
 formElement.addEventListener('submit', handleFormSubmit);
