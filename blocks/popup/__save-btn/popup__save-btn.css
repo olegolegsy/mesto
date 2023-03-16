@@ -14,3 +14,13 @@
   border: none;
   background-color: black;
 }
+
+@media screen and (max-width: 768px) {
+  .popup__save-btn {
+    width: 238px;
+    height: 46px;
+
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
