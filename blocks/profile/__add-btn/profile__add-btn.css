@@ -14,6 +14,8 @@
   background: url(../../../images/profile__add-button-img.svg);
   background-position: center;
   background-repeat: no-repeat;
+
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {
@@ -21,4 +23,8 @@
     margin-top: 36px;
     width: 282px;
   }
+}
+
+.profile__add-btn:hover {
+  opacity: .6;
 }

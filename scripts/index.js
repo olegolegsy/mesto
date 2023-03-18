@@ -17,16 +17,17 @@ function closeForm () {
 function handleFormSubmit (evt) {
   evt.preventDefault();
 
-  let name = nameInput.value;
-  let job = jobInput.value;
-
-  profileName.textContent = name;
-  profileJob.textContent = job;
+  profileName.textContent = nameInput.value;
+  profileJob.textContent = jobInput.value;
 
   popup.classList.remove('popup_opened');
 }
 
 function openForm () {
+
+  profileName.textContent = nameInput.value;
+  profileJob.textContent = jobInput.value;
+
   popup.classList.add('popup_opened')
 }
 

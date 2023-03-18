@@ -12,18 +12,24 @@
  position: absolute;
  background-image: url(../../../images/popup__cls-btn_small.svg);
  background-size: contain;
+ background-repeat: no-repeat;
+ background-color: rgba(0, 0, 0, 0);
 
  z-index: 99;
+ cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {
   .popup__cls-btn {
-    width: 20px;
-    height: 20px;
+    background-size: 20px;
 
     top: -36px;
     right: 0px;
 
     background-image: url(../../../images/popup__cls-btn_small.svg);
   }
+}
+
+.popup__cls-btn:hover {
+  opacity: .6;
 }
