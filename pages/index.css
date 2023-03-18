@@ -40,13 +40,11 @@
 
 /* popup */
 @import url(../blocks/popup/popup.css);
-@import url(../blocks/popup/_cls/popup_cls.css);
+@import url(../blocks/popup/_opened/popup_opened.css);
 
 @import url(../blocks/popup/__window/popup__window.css);
 @import url(../blocks/popup/__cls-btn/popup__cls-btn.css);
 @import url(../blocks/popup/__title/popup__title.css);
 @import url(../blocks/popup/__form/popup__form.css);
 @import url(../blocks/popup/__input/popup__input.css);
-@import url(../blocks/popup/__input-name/popup__input-name.css);
-@import url(../blocks/popup/__input-job/popup__input-job.css);
 @import url(../blocks/popup/__save-btn/popup__save-btn.css);

@@ -10,9 +10,10 @@
   border: none;
 
  position: absolute;
- background-image: url(../../../images/popup__cls-btn.svg);
- background-color: black;
+ background-image: url(../../../images/popup__cls-btn_small.svg);
  background-size: contain;
+
+ z-index: 99;
 }
 
 @media screen and (max-width: 768px) {

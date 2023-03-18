@@ -9,18 +9,7 @@
 </head>
 <body class="page">
 
-  <section class="popup popup_cls">
 
-    <div class="popup__window">
-      <button type="submit" class="popup__cls-btn hover"></button>
-      <h2 class="popup__title">Редактировать профиль</h2>
-      <form class="popup__form">
-        <input type="text" class="popup__input popup__input-name" value="Жак-Ив Кусто">
-        <input type="text" class="popup__input popup__input-job" value="Исследователь океана">
-        <button class="popup__save-btn hover" type="submit">Сохранить</button>
-      </form>
-    </div>
-  </section>
 
   <header class="header">
     <img class="header__logo" src="images/header__logo.svg" alt="Логотип. Logo.">
@@ -35,12 +24,12 @@
       <div class="profile__text">
         <div class="profile__headline">
           <h1 class="profile__title">Жак-Ив Кусто</h1>
-          <button class="profile__edit-btn hover" type="submit"></button>
+          <button class="profile__edit-btn hover" type="button"></button>
         </div>
         <p class="profile__job">Исследователь океана</p>
       </div>
     </div>
-    <button class="profile__add-btn hover" type="submit"></button>
+    <button class="profile__add-btn hover" type="button"></button>
 
   </section>
 
@@ -49,42 +38,42 @@
       <img src="images/elements/Karachaevsk.jpg" alt="Карачаевск" class="element__img">
       <div class="element__content">
         <h2 class="element__title">Карачаевск</h2>
-        <button class="element__like hover" type="submit"></button>
+        <button class="element__like hover" type="button"></button>
       </div>
     </article>
     <article class="element">
       <img src="images/elements/Elbrus.jpg" alt="Гора Эльбрус" class="element__img">
       <div class="element__content">
         <h2 class="element__title">Гора Эльбрус</h2>
-        <button class="element__like hover" type="submit"></button>
+        <button class="element__like hover" type="button"></button>
       </div>
     </article>
     <article class="element">
       <img src="images/elements/Dombai.jpg" alt="Домбай" class="element__img">
       <div class="element__content">
         <h2 class="element__title">Домбай</h2>
-        <button class="element__like hover" type="submit"></button>
+        <button class="element__like hover" type="button"></button>
       </div>
     </article>
     <article class="element">
       <img src="images/elements/Elbrus.jpg" alt="Гора Эльбрус" class="element__img">
       <div class="element__content">
         <h2 class="element__title">Гора Эльбрус</h2>
-        <button class="element__like hover" type="submit"></button>
+        <button class="element__like hover" type="button"></button>
       </div>
     </article>
     <article class="element">
       <img src="images/elements/Dombai.jpg" alt="Домбай" class="element__img">
       <div class="element__content">
         <h2 class="element__title">Домбай</h2>
-        <button class="element__like hover" type="submit"></button>
+        <button class="element__like hover" type="button"></button>
       </div>
     </article>
     <article class="element">
       <img src="images/elements/Karachaevsk.jpg" alt="Карачаевск" class="element__img">
       <div class="element__content">
         <h2 class="element__title">Карачаево-Черкесия</h2>
-        <button class="element__like hover" type="submit"></button>
+        <button class="element__like hover" type="button"></button>
       </div>
     </article>
   </section>
@@ -95,6 +84,19 @@
   <p class="footer__copyright">© 2023 Mesto Russia</p>
 </footer>
 
-<script src="/scripts/index.js"></script>
+<section class="popup">
+
+  <div class="popup__window">
+    <button type="reset" class="popup__cls-btn hover"></button>
+    <h2 class="popup__title">Редактировать профиль</h2>
+    <form class="popup__form" name="inputProfile">
+      <input type="text" class="popup__input popup__input_name" value="Жак-Ив Кусто" name="inputName">
+      <input type="text" class="popup__input popup__input_job" value="Исследователь океана" name="inputJob">
+      <button class="popup__save-btn hover" type="button">Сохранить</button>
+    </form>
+  </div>
+</section>
+
+<script src="scripts/index.js"></script>
 </body>
 </html>
