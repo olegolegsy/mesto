@@ -1,4 +1,4 @@
-.popup__window {
+.popup__container {
   box-sizing: border-box;
   margin: auto;
   padding: 36px;
@@ -18,7 +18,7 @@
 }
 
 @media screen and (max-width: 768px) {
-  .popup__window {
+  .popup__container {
     margin: auto;
     padding: 25px 22px;
 
