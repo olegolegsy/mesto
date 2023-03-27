@@ -31,50 +31,7 @@
 
   </section>
 
-  <section class="elements">
-    <article class="element">
-      <img src="images/elements/Karachaevsk.jpg" alt="Карачаевск" class="element__img">
-      <div class="element__content">
-        <h2 class="element__title">Карачаевск</h2>
-        <button class="element__like" type="button"></button>
-      </div>
-    </article>
-    <article class="element">
-      <img src="images/elements/Elbrus.jpg" alt="Гора Эльбрус" class="element__img">
-      <div class="element__content">
-        <h2 class="element__title">Гора Эльбрус</h2>
-        <button class="element__like" type="button"></button>
-      </div>
-    </article>
-    <article class="element">
-      <img src="images/elements/Dombai.jpg" alt="Домбай" class="element__img">
-      <div class="element__content">
-        <h2 class="element__title">Домбай</h2>
-        <button class="element__like" type="button"></button>
-      </div>
-    </article>
-    <article class="element">
-      <img src="images/elements/Elbrus.jpg" alt="Гора Эльбрус" class="element__img">
-      <div class="element__content">
-        <h2 class="element__title">Гора Эльбрус</h2>
-        <button class="element__like" type="button"></button>
-      </div>
-    </article>
-    <article class="element">
-      <img src="images/elements/Dombai.jpg" alt="Домбай" class="element__img">
-      <div class="element__content">
-        <h2 class="element__title">Домбай</h2>
-        <button class="element__like" type="button"></button>
-      </div>
-    </article>
-    <article class="element">
-      <img src="images/elements/Karachaevsk.jpg" alt="Карачаевск" class="element__img">
-      <div class="element__content">
-        <h2 class="element__title">Карачаево-Черкесия</h2>
-        <button class="element__like" type="button"></button>
-      </div>
-    </article>
-  </section>
+  <section class="elements"></section>
 
 </main>
 
@@ -82,10 +39,11 @@
   <p class="footer__copyright">© 2023 Mesto Russia</p>
 </footer>
 
-<section class="popup">
+<!-- profile -->
+<section class="popup popup_type_profile">
 
   <div class="popup__container">
-    <button type="button" class="popup__cls-btn"></button>
+    <button type="button" class="popup__cls-btn popup__cls-btn_type_profile"></button>
     <h2 class="popup__title">Редактировать профиль</h2>
     <form class="popup__form" name="inputProfile">
       <input type="text" class="popup__input popup__input_type_name" name="inputName">
@@ -94,6 +52,42 @@
     </form>
   </div>
 </section>
+
+<!-- place -->
+<section class="popup popup_type_place">
+
+  <div class="popup__container">
+    <button type="button" class="popup__cls-btn popup__cls-btn_type_newplace"></button>
+    <h2 class="popup__title">Новое место</h2>
+    <form class="popup__form" name="inputPlace">
+      <input placeholder="Название" type="text" class="popup__input popup__input_type_title" name="inputTitle">
+      <input placeholder="Ссылка на картинку" type="text" class="popup__input popup__input_type_link" name="inputLink">
+      <button class="popup__save-btn" type="submit">Сохранить</button>
+    </form>
+  </div>
+</section>
+
+<!-- image -->
+<section class="popup popup_type_image">
+
+  <div class="popup__image-content">
+    <button type="button" class="popup__cls-btn popup__cls-btn_type_image"></button>
+    <img class="popup__image-photo" src="" alt="проверьте ссылку">
+    <caption class="popup__image-caption"></caption>
+  </div>
+</section>
+
+<!-- template -->
+<template class="template">
+  <article class="element">
+    <button type="button" class="element__delete"></button>
+    <img src="" alt="" class="element__img">
+    <div class="element__content">
+      <h2 class="element__title"></h2>
+      <button class="element__like" type="button"></button>
+    </div>
+  </article>
+</template>
 
 <script src="scripts/index.js"></script>
 </body>
