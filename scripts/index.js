@@ -1,30 +1,3 @@
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
 //const = document.querySelector('.'); //
 
 
@@ -33,7 +6,7 @@ const initialCards = [
 const popups = document.querySelectorAll('.popup'); //список окон
 const popupsCloseBtns = document.querySelectorAll('.popup__cls-btn'); //список кнп для закрытия окон
 
-const elements = document.querySelector('.elements'); //секция с карточками
+const elementsContainer = document.querySelector('.elements'); //секция с карточками
 const elementTemplate = document.querySelector('.template').content; //шаблон карточки с содержимым
 
 //profile
@@ -105,13 +78,14 @@ function createElement(el) {
 
 //inital cards creation
 initialCards.forEach((card) => {
-  elements.append(createElement(card));
+  elementsContainer.append(createElement(card));
 });
 
 // close popup
 popupsCloseBtns.forEach((i) => {
+  const popupCurrent = i.closest('.popup');
   i.addEventListener('click', () => {
-    closePopup(i.closest('.popup'))
+    closePopup(popupCurrent)
   })
 });
 
@@ -142,7 +116,7 @@ placePopupForm.addEventListener('submit', (evt) => {
     name: placePopupInputTitle.value,
     link: placePopupInputLink.value
   };
-  elements.prepend(createElement(objectPlace));
+  elementsContainer.prepend(createElement(objectPlace));
   placePopupInputTitle.value = '';
   placePopupInputLink.value = '';
   closePopup(placePopup);
