@@ -6,7 +6,7 @@
   width: 18px;
   height: 19px;
 
-  z-index: 2;
+  z-index: 10;
   border: none;
 
   background-image: url(../../../images/element__delete.svg);

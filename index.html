@@ -31,7 +31,8 @@
 
   </section>
 
-  <section class="elements"></section>
+  <section class="elements">
+  </section>
 
 </main>
 
@@ -45,7 +46,7 @@
   <div class="popup__container">
     <button type="button" class="popup__cls-btn popup__cls-btn_type_profile"></button>
     <h2 class="popup__title">Редактировать профиль</h2>
-    <form class="popup__form" name="inputProfile">
+    <form class="popup__form popup__form_profile" name="inputProfile">
       <input type="text" class="popup__input popup__input_type_name" name="inputName">
       <input type="text" class="popup__input popup__input_type_job" name="inputJob">
       <button class="popup__save-btn" type="submit">Сохранить</button>
@@ -57,9 +58,9 @@
 <section class="popup popup_type_place">
 
   <div class="popup__container">
-    <button type="button" class="popup__cls-btn popup__cls-btn_type_newplace"></button>
+    <button type="button" class="popup__cls-btn popup__cls-btn_type_place"></button>
     <h2 class="popup__title">Новое место</h2>
-    <form class="popup__form" name="inputPlace">
+    <form class="popup__form popup__form_place" name="inputPlace">
       <input placeholder="Название" type="text" class="popup__input popup__input_type_title" name="inputTitle">
       <input placeholder="Ссылка на картинку" type="text" class="popup__input popup__input_type_link" name="inputLink">
       <button class="popup__save-btn" type="submit">Сохранить</button>
@@ -73,7 +74,7 @@
   <div class="popup__image-content">
     <button type="button" class="popup__cls-btn popup__cls-btn_type_image"></button>
     <img class="popup__image-photo" src="" alt="проверьте ссылку">
-    <caption class="popup__image-caption"></caption>
+    <p class="popup__image-caption"></p>
   </div>
 </section>
 

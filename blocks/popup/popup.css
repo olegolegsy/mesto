@@ -1,11 +1,12 @@
 .popup {
   font-family: inherit;
+  display: flex;
 
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  display: none;
+  visibility: hidden;
 
   justify-content: center;
   align-items: center;
@@ -13,8 +14,10 @@
   position: fixed;
   height: 100%;
   width: 100%;
-  z-index: 2;
+  z-index: 99;
 
   background: rgba(0, 0, 0, .5);
+
+  transition: visibility 0.3s, opacity 0.3s linear;
 }
 
