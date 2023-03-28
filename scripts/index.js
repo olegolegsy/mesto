@@ -29,6 +29,7 @@ const initialCards = [
 
 
 //===== vars =====
+
 const popups = document.querySelectorAll('.popup'); //список окон
 const popupsCloseBtns = document.querySelectorAll('.popup__cls-btn'); //список кнп для закрытия окон
 
