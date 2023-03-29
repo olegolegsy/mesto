@@ -48,9 +48,10 @@ function closePopup(popup) {
 function createElement(el) {
   const newElement = elementTemplate.querySelector('.element').cloneNode(true);
   const newElementImg = newElement.querySelector('.element__img');
+  const newElementTitle = newElement.querySelector('.element__title');
+
   const newElementDeleteBtn = newElement.querySelector('.element__delete');
   const newElementLikeBtn = newElement.querySelector('.element__like');
-  const newElementTitle = newElement.querySelector('.element__title');
 
   newElementImg.src = el.link;
   newElementImg.alt = el.name;
@@ -117,6 +118,7 @@ placePopupForm.addEventListener('submit', (evt) => {
     link: placePopupInputLink.value
   };
   elementsContainer.prepend(createElement(objectPlace));
+
   placePopupInputTitle.value = '';
   placePopupInputLink.value = '';
   closePopup(placePopup);
