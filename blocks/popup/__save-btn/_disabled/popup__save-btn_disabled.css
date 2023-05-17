@@ -1,0 +1,6 @@
+.popup__save-btn_disabled {
+    background-color: white;
+    color: gray;
+    border: 1px solid gray;
+    opacity: 0.2;
+}
