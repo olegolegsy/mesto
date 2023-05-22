@@ -1,8 +1,6 @@
 .popup__input-error {
     visibility: hidden;
 
-    margin: 5px 0 10px;
-
     font-family: 'Inter';
     font-style: normal;
     color: #FF0000;

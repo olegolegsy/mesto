@@ -37,11 +37,13 @@ const imagePopupCaption = document.querySelector('.popup__image-caption'); //о�
 // open for all
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupWithEscBtn);
 };
 
 // close for all
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupWithEscBtn);
 };
 
 // create new elements
@@ -122,4 +124,25 @@ placePopupForm.addEventListener('submit', (evt) => {
   placePopupInputTitle.value = '';
   placePopupInputLink.value = '';
   closePopup(placePopup);
+});
+
+// ====================== проектная 6 ======================
+
+// close with Esc
+function closePopupWithEscBtn(evt) {
+  if(evt. key === 'Escape') {
+    const popupOpened = document.querySelector('.popup_opened');
+    closePopup(popupOpened);
+  };
+};
+
+// close with overlay
+function closePopupWithOverlay(evt) {
+  if(evt.target === evt.currentTarget) {
+    closePopup(evt.currentTarget);
+  };
+};
+
+popups.forEach((popup) => {
+  popup.addEventListener('click', closePopupWithOverlay);
 });
