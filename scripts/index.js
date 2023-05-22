@@ -35,9 +35,13 @@ const imagePopupCaption = document.querySelector('.popup__image-caption'); //Ð¾Ð
 //===== funcs =====
 
 // open for all
-function openPopup(popup) {
+function openPopup(popup, set) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupWithEscBtn);
+
+  const button = popup.querySelector(set.saveButtonSelector);
+  disableSubmitButton(button, set);
+
 };
 
 // close for all
@@ -47,7 +51,7 @@ function closePopup(popup) {
 };
 
 // create new elements
-function createElement(el) {
+function createElement(el, set) {
   const newElement = elementTemplate.querySelector('.element').cloneNode(true);
   const newElementImg = newElement.querySelector('.element__img');
   const newElementTitle = newElement.querySelector('.element__title');
@@ -71,7 +75,7 @@ function createElement(el) {
       imagePopupImage.src = el.link;
       imagePopupImage.alt = el.name;
       imagePopupCaption.textContent = el.name;
-      openPopup(imagePopup);
+      openPopup(imagePopup, set);
   });
 
   return newElement;
@@ -94,14 +98,14 @@ popupsCloseBtns.forEach((i) => {
 
 // edit place data
 placeEditBtn.addEventListener('click', () => {
-  openPopup(placePopup);
+  openPopup(placePopup, set);
 });
 
 // open profile and load current data
 profileEditBtn.addEventListener('click', () => {
   profilePopupInputName.value = profileName.textContent;
   profilePopupInputJob.value = profileJob.textContent;
-  openPopup(profilePopup);
+  openPopup(profilePopup, set);
 });
 
 // edit profile data
@@ -119,7 +123,7 @@ placePopupForm.addEventListener('submit', (evt) => {
     name: placePopupInputTitle.value,
     link: placePopupInputLink.value
   };
-  elementsContainer.prepend(createElement(objectPlace));
+  elementsContainer.prepend(createElement(objectPlace, set));
 
   placePopupInputTitle.value = '';
   placePopupInputLink.value = '';

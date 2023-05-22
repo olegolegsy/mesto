@@ -12,33 +12,33 @@ function enableValidation(set) {
 const forms = Array.from(document.querySelectorAll(set.formSelector));
 
 forms.forEach((form) => {
-  setEventListeners(form);
+  setEventListeners(form, set);
 });
 };
 
-function setEventListeners(form) {
+function setEventListeners(form, set) {
   const inputs = Array.from(form.querySelectorAll(set.inputSelector));
   const button = form.querySelector(set.saveButtonSelector);
 
-  toggleButtonState (inputs, button);
+  toggleButtonState (inputs, button, set);
 
   inputs.forEach((input) => {
     input.addEventListener('input', () => {
-      isValid(input, form);
-      toggleButtonState (inputs, button);
+      isValid(input, form, set);
+      toggleButtonState (inputs, button, set);
     });
   });
 };
 
-function isValid(input, form) {
+function isValid(input, form, set) {
   if (!input.validity.valid) {
-    showInputError(input, form, input.validationMessage);
+    showInputError(input, form, input.validationMessage, set);
   } else {
-    hideInputError(input, form);
+    hideInputError(input, form, set);
   };
 };
 
-function showInputError(input, form, validationMessage) {
+function showInputError(input, form, validationMessage, set) {
   const errorElement = form.querySelector(`.${input.name}-error`);
 
   input.classList.add(set.inputErrorClass);
@@ -46,7 +46,7 @@ function showInputError(input, form, validationMessage) {
   errorElement.classList.add(set.errorClassActive);
 };
 
-function hideInputError(input, form) {
+function hideInputError(input, form, set) {
   const errorElement = form.querySelector(`.${input.name}-error`);
   
   input.classList.remove(set.inputErrorClass);
@@ -60,14 +60,22 @@ function hasInvalidInput(inputs) {
   })
 };
 
-function toggleButtonState (inputs, button) {
+function toggleButtonState (inputs, button, set) {
   if (hasInvalidInput(inputs)) {
-    button.classList.add(set.inactiveSaveButtonClass);
-    button.disabled = true;
+    disableSubmitButton(button, set);
   } else {
-    button.classList.remove(set.inactiveSaveButtonClass);
-    button.disabled = false;
+    enableSubmitButton(button, set);
   }
 }; 
+
+function enableSubmitButton(button, set) {
+  button.classList.remove(set.inactiveSaveButtonClass);
+  button.disabled = false;
+};
+
+function disableSubmitButton(button, set) {
+  button.classList.add(set.inactiveSaveButtonClass);
+  button.disabled = true;
+};
 
 enableValidation(set);
