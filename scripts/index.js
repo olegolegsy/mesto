@@ -35,13 +35,9 @@ const imagePopupCaption = document.querySelector('.popup__image-caption'); //о�
 //===== funcs =====
 
 // open for all
-function openPopup(popup, set) {
+function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupWithEscBtn);
-
-  const button = popup.querySelector(set.saveButtonSelector);
-  disableSubmitButton(button, set);
-
 };
 
 // close for all
@@ -51,7 +47,7 @@ function closePopup(popup) {
 };
 
 // create new elements
-function createElement(el, set) {
+function createElement(el) {
   const newElement = elementTemplate.querySelector('.element').cloneNode(true);
   const newElementImg = newElement.querySelector('.element__img');
   const newElementTitle = newElement.querySelector('.element__title');
@@ -75,7 +71,7 @@ function createElement(el, set) {
       imagePopupImage.src = el.link;
       imagePopupImage.alt = el.name;
       imagePopupCaption.textContent = el.name;
-      openPopup(imagePopup, set);
+      openPopup(imagePopup);
   });
 
   return newElement;
@@ -98,14 +94,14 @@ popupsCloseBtns.forEach((i) => {
 
 // edit place data
 placeEditBtn.addEventListener('click', () => {
-  openPopup(placePopup, set);
+  openPopup(placePopup);
 });
 
 // open profile and load current data
 profileEditBtn.addEventListener('click', () => {
   profilePopupInputName.value = profileName.textContent;
   profilePopupInputJob.value = profileJob.textContent;
-  openPopup(profilePopup, set);
+  openPopup(profilePopup);
 });
 
 // edit profile data
@@ -125,9 +121,13 @@ placePopupForm.addEventListener('submit', (evt) => {
   };
   elementsContainer.prepend(createElement(objectPlace, set));
 
-  placePopupInputTitle.value = '';
-  placePopupInputLink.value = '';
+  placePopupForm.reset();
   closePopup(placePopup);
+});
+
+placePopupForm.addEventListener('reset', () => {
+  const button = placePopupForm.querySelector(set.saveButtonSelector);
+  disableSubmitButton(button, set)
 });
 
 // ====================== проектная 6 ======================
