@@ -108,8 +108,9 @@ placePopupForm.addEventListener('submit', (evt) => {
 
 // вешаем на все формы слушатель для ресета для отключения кнопки 
 forms.forEach((form) => {
+  const button = form.querySelector(settings.saveButtonSelector);
+  
   form.addEventListener('reset', () => {
-    const button = form.querySelector(settings.saveButtonSelector);
     button.classList.add(settings.inactiveSaveButtonClass);
     button.disabled = true;
   });
