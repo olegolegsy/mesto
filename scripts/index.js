@@ -38,8 +38,24 @@ const placePopupForm = document.querySelector('.popup__form_place');//оконо
 const placePopupInputTitle = document.querySelector('.popup__input_type_title'); //окно ввод имя карточка
 const placePopupInputLink = document.querySelector('.popup__input_type_link'); //окно ввод фото карточка
 
+//image
+const imagePopup = document.querySelector('.popup_type_image'); //окно просмотра фото
+const imagePopupImage = document.querySelector('.popup__image-photo'); //окно просмотра фото картинка
+const imagePopupCaption = document.querySelector('.popup__image-caption'); //окно просмотра фото подпись
+
+// валидаторы
+const profileValidation = new FormValidator(settings, profilePopupForm);
+const newCardValidation = new FormValidator(settings, placePopupForm);
 
 //===== функции =====
+
+// коллбек для открытия попапа с картинкой 
+function handleOpenPopup(name, link) {
+  imagePopupImage.src = link; 
+  imagePopupImage.alt = name; 
+  imagePopupCaption.textContent = name; 
+  openPopup(imagePopup); 
+}  
 
 // открыть попап
 function openPopup(popup) {
@@ -53,12 +69,17 @@ function closePopup(popup) {
   document.removeEventListener('keydown', closePopupWithEscBtn);
 };
 
+// создаем карточку 
+function createCard(card, template, handleOpenPopup) {
+  const c = new Card(card, template, handleOpenPopup);
+  return c.generateCard()
+}
+
 // ===== action =====
 
 //создаем первые 6 карточек
 initialCards.forEach((card) => {
-  const c = new Card(card, template, openPopup);
-  elementsContainer.append(c.generateCard());
+  elementsContainer.append(createCard(card, template, handleOpenPopup));
 });
 
 // вешаем слушатель закрытие попапа на все кнопки 
@@ -71,6 +92,9 @@ popupsCloseBtns.forEach((i) => {
 
 // открываем попап создания новой карточки 
 placeEditBtn.addEventListener('click', () => {
+  newCardValidation.resetValidation();
+  newCardValidation.disableSubmitButton();
+  placePopupForm.reset();
   openPopup(placePopup);
 });
 
@@ -78,6 +102,10 @@ placeEditBtn.addEventListener('click', () => {
 profileEditBtn.addEventListener('click', () => {
   profilePopupInputName.value = profileName.textContent;
   profilePopupInputJob.value = profileJob.textContent;
+
+  profileValidation.resetValidation();
+  profileValidation.disableSubmitButton();
+
   openPopup(profilePopup);
 });
 
@@ -87,7 +115,6 @@ profilePopupForm.addEventListener('submit', (evt) => {
   profileName.textContent = profilePopupInputName.value;
   profileJob.textContent = profilePopupInputJob.value;
 
-  profilePopupForm.reset();
   closePopup(profilePopup);
 });
 
@@ -99,21 +126,15 @@ placePopupForm.addEventListener('submit', (evt) => {
     link: placePopupInputLink.value
   };
 
-  const c = new Card(objectPlace, template, openPopup);
-  elementsContainer.prepend(c.generateCard());
+  elementsContainer.prepend(createCard(objectPlace, template, handleOpenPopup));
 
-  placePopupForm.reset();
   closePopup(placePopup);
 });
 
-// вешаем на все формы слушатель для ресета для отключения кнопки 
-forms.forEach((form) => {
-  form.addEventListener('reset', () => {
-    const button = form.querySelector(settings.saveButtonSelector);
-    button.classList.add(settings.inactiveSaveButtonClass);
-    button.disabled = true;
-  });
-});
+// вешаем на все формы слушатель для ресета для отключения кнопки   
+  // placePopupForm.addEventListener('reset', () => {
+  //   newCardValidation.disableSubmitButton();
+  // });
 
 // ====================== проектная 6 ======================
 
@@ -139,11 +160,8 @@ popups.forEach((popup) => {
 
 // ====================== проектная 7 ======================
 
-// запускаем валидацию форм 
-forms.forEach((form) => {
-  const vali = new FormValidator(settings, form);
-  vali.enableValidation();
-})
+profileValidation.enableValidation();
+newCardValidation.enableValidation(); 
 
 
 // ====================== старый код ======================
@@ -184,11 +202,5 @@ forms.forEach((form) => {
 //   button.classList.add(settings.inactiveSaveButtonClass);
 //   button.disabled = true;
 // });
-
-//image
-// const imagePopup = document.querySelector('.popup_type_image'); //окно просмотра фото
-// const imagePopupImage = document.querySelector('.popup__image-photo'); //окно просмотра фото картинка
-// const imagePopupCaption = document.querySelector('.popup__image-caption'); //окно просмотра фото подпись
-
 
 //const elementTemplate = document.querySelector('.template').content; //шаблон карточки с содержимым

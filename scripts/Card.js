@@ -1,11 +1,11 @@
 export default  class Card {
-    constructor(data, templateSelector, openPopup) {
+    constructor(data, templateSelector, handleOpenPopup) {
         this._name = data.name;
         this._link = data.link;
 
         this._templateSelector = templateSelector;
 
-        this._openPopup = openPopup;
+        this._handleOpenPopup = handleOpenPopup;
     }
 
     _getTemplate() {
@@ -21,36 +21,29 @@ export default  class Card {
     generateCard() {
         this._element = this._getTemplate();
 
+        this._elementImage = this._element.querySelector('.element__img');
+        this._elementLikeBtn = this._element.querySelector('.element__like');
+
         this._setEventListeners();
 
-        this._element.querySelector('.element__img').src = this._link;
-        this._element.querySelector('.element__img').alt = this._name;
+        this._elementImage.src = this._link;
+        this._elementImage.alt = this._name;
         this._element.querySelector('.element__title').textContent = this._name;
 
         return this._element;
     }
 
-    _openCard() {
-        this._imagePopup = document.querySelector('.popup_type_image'); //окно просмотра фото
-        this._imagePopupImage = document.querySelector('.popup__image-photo'); //окно просмотра фото картинка
-        this._imagePopupCaption = document.querySelector('.popup__image-caption'); //окно просмотра фото подпись
-
-               this._imagePopupImage.src = this._link;
-               this._imagePopupImage.alt = this._name;
-               this._imagePopupCaption.textContent = this._name;
-               this._openPopup(this._imagePopup);
-    }
-
     _likeCard() {
-        this._element.querySelector('.element__like').classList.toggle('element__like_active');
+        this._elementLikeBtn.classList.toggle('element__like_active');
     }
 
     _deleteCard() {
-        this._element.remove()
+        this._element.remove();
+        this._element = null;
     }
 
     _setEventListeners() {
-        this._element.querySelector('.element__like').addEventListener('click', () => {
+        this._elementLikeBtn.addEventListener('click', () => {
             this._likeCard();
         });
 
@@ -58,8 +51,8 @@ export default  class Card {
             this._deleteCard();
         });
 
-        this._element.querySelector('.element__img').addEventListener('click', () => {
-            this._openCard();
+        this._elementImage.addEventListener('click', () => {
+            this._handleOpenPopup(this._name, this._link) ;
         });
     }
 }
