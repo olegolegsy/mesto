@@ -1,19 +1,16 @@
-import Card from '../scripts/components/Card.js'
-import FormValidator from '../scripts/components/FormValidator.js'
-import { initialCards } from '../scripts/utils/cards.js'
+//components
+import Card from '../scripts/components/Card.js';
+import FormValidator from '../scripts/components/FormValidator.js';
+import Section from '../scripts/components/Section.js';
+import UserInfo from '../scripts/components/UserInfo.js';
+import PopupWithForm from '../scripts/components/PopupWithForm.js';
+import PopupWithImage from '../scripts/components/PopupWithImage.js';
 
-const settings = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  saveButtonSelector: '.popup__save-btn',
-
-  inactiveSaveButtonClass: 'popup__save-btn_disabled',
-  inputErrorClass: 'popup__input_error',
-  errorClassActive: 'popup__input-error_active'
-};
+//vars
+import { initialCards } from '../scripts/utils/cards.js';
+import { settings } from '../scripts/utils/settings.js';
 
 //===== переменные =====
-const forms = document.querySelectorAll(settings.formSelector);
 const popups = document.querySelectorAll('.popup'); //список окон
 const popupsCloseBtns = document.querySelectorAll('.popup__cls-btn'); //список кнп для закрытия окон
 
@@ -50,10 +47,10 @@ const newCardValidation = new FormValidator(settings, placePopupForm);
 //===== функции =====
 
 // коллбек для открытия попапа с картинкой 
-function handleOpenPopup(name, link) {
+function handleOpenPopup(title, link) {
   imagePopupImage.src = link; 
-  imagePopupImage.alt = name; 
-  imagePopupCaption.textContent = name; 
+  imagePopupImage.alt = title; 
+  imagePopupCaption.textContent = title; 
   openPopup(imagePopup); 
 }  
 
@@ -71,8 +68,8 @@ function closePopup(popup) {
 
 // создаем карточку 
 function createCard(card, template, handleOpenPopup) {
-  const c = new Card(card, template, handleOpenPopup);
-  return c.generateCard()
+  const newCard = new Card(card, template, handleOpenPopup);
+  return newCard.generateCard()
 }
 
 // ===== action =====
@@ -122,7 +119,7 @@ profilePopupForm.addEventListener('submit', (evt) => {
 placePopupForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const objectPlace = {
-    name: placePopupInputTitle.value,
+    title: placePopupInputTitle.value,
     link: placePopupInputLink.value
   };
 
@@ -130,13 +127,6 @@ placePopupForm.addEventListener('submit', (evt) => {
 
   closePopup(placePopup);
 });
-
-// вешаем на все формы слушатель для ресета для отключения кнопки   
-  // placePopupForm.addEventListener('reset', () => {
-  //   newCardValidation.disableSubmitButton();
-  // });
-
-// ====================== проектная 6 ======================
 
 // закрытие попапа Esc
 function closePopupWithEscBtn(evt) {
@@ -162,45 +152,3 @@ popups.forEach((popup) => {
 
 profileValidation.enableValidation();
 newCardValidation.enableValidation(); 
-
-
-// ====================== старый код ======================
-// create new elements
-// function createElement(el) {
-//   const newElement = elementTemplate.querySelector('.element').cloneNode(true);
-//   const newElementImg = newElement.querySelector('.element__img');
-//   const newElementTitle = newElement.querySelector('.element__title');
-
-//   const newElementDeleteBtn = newElement.querySelector('.element__delete');
-//   const newElementLikeBtn = newElement.querySelector('.element__like');
-
-//   newElementImg.src = el.link;
-//   newElementImg.alt = el.name;
-//   newElementTitle.textContent = el.name;
-
-//   newElementLikeBtn.addEventListener('click', (evt) => {
-//     evt.target.classList.toggle('element__like_active');
-//   });
-
-//   newElementDeleteBtn.addEventListener('click', (evt) => {
-//     evt.target.closest('.element').remove();
-//   });
-
-//   newElementImg.addEventListener('click', () => {
-//       imagePopupImage.src = el.link;
-//       imagePopupImage.alt = el.name;
-//       imagePopupCaption.textContent = el.name;
-//       openPopup(imagePopup);
-//   });
-
-//   return newElement;
-// };
-
-
-// placePopupForm.addEventListener('reset', () => {
-//   const button = placePopupForm.querySelector(settings.saveButtonSelector);
-//   button.classList.add(settings.inactiveSaveButtonClass);
-//   button.disabled = true;
-// });
-
-//const elementTemplate = document.querySelector('.template').content; //шаблон карточки с содержимым

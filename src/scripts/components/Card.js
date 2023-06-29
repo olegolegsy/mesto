@@ -1,6 +1,6 @@
 export default  class Card {
     constructor(data, templateSelector, handleOpenPopup) {
-        this._name = data.name;
+        this._title = data.title;
         this._link = data.link;
 
         this._templateSelector = templateSelector;
@@ -27,8 +27,8 @@ export default  class Card {
         this._setEventListeners();
 
         this._elementImage.src = this._link;
-        this._elementImage.alt = this._name;
-        this._element.querySelector('.element__title').textContent = this._name;
+        this._elementImage.alt = this._title;
+        this._element.querySelector('.element__title').textContent = this._title;
 
         return this._element;
     }
@@ -52,7 +52,7 @@ export default  class Card {
         });
 
         this._elementImage.addEventListener('click', () => {
-            this._handleOpenPopup(this._name, this._link) ;
+            this._handleOpenPopup(this._title, this._link) ;
         });
     }
 }
