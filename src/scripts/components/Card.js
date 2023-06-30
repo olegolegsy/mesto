@@ -24,12 +24,11 @@ export default  class Card {
         this._elementImage = this._element.querySelector('.element__img');
         this._elementLikeBtn = this._element.querySelector('.element__like');
 
-        this._setEventListeners();
-
         this._elementImage.src = this._link;
         this._elementImage.alt = this._title;
         this._element.querySelector('.element__title').textContent = this._title;
 
+        this._setEventListeners();
         return this._element;
     }
 
@@ -52,7 +51,7 @@ export default  class Card {
         });
 
         this._elementImage.addEventListener('click', () => {
-            this._handleOpenPopup(this._title, this._link) ;
+            this._handleOpenPopup(this._title, this._link);
         });
     }
 }

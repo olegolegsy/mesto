@@ -8,3 +8,7 @@ export const settings = {
     errorClassActive: 'popup__input-error_active'
   };
   
+  export const profileSelectors = {
+    name: '.profile__title',
+    job: '.profile__job'
+  }
