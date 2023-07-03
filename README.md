@@ -6,5 +6,6 @@
 * JavaScript
 * HTML
 * CSS
+* Webpack
 
 ### Ссылка на сайт: https://olegolegsy.github.io/mesto/
