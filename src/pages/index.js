@@ -48,15 +48,15 @@ elementsContainer.setItems();
 
 // ========================= VALIDATORS ==============================
 const profileValidation = new FormValidator(settings, profilePopupForm);
-const newCardValidation = new FormValidator(settings, placePopupForm);
+const placeValidation = new FormValidator(settings, placePopupForm);
 
 profileValidation.enableValidation();
-newCardValidation.enableValidation(); 
+placeValidation.enableValidation(); 
 
 // ========================= LISTENERS ==============================
 placeEditBtn.addEventListener('click', () => {
-  newCardValidation.resetValidation();
-  newCardValidation.disableSubmitButton();
+  placeValidation.resetValidation();
+  placeValidation.disableSubmitButton();
   placePopup.open();
 });
 
