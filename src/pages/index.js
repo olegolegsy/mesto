@@ -8,6 +8,7 @@ import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
+import Api from '../components/Api.js';
 
 //vars
 import { initialCards } from '../utils/cards.js';
@@ -17,6 +18,15 @@ import { profileEditBtn, profilePopupForm, placeEditBtn, placePopupForm} from '.
 
 // ========================= OOP ==============================
 const userInfo = new UserInfo(profileSelectors);
+
+// ========================= Api ==============================
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-71',
+  headers: {
+    authorization: '63e51c94-2a20-4ac4-b2ef-ac2b1cdb1198',
+    'Content-Type': 'application/json'
+
+}});
 
 // ========================= POPUPS ==============================
 //PLACE
@@ -66,3 +76,5 @@ profileEditBtn.addEventListener('click', () => {
   profilePopup.setInputsValue(userInfo.getUserInfo());
   profilePopup.open();
 });
+
+

@@ -10,5 +10,6 @@ export const settings = {
   
   export const profileSelectors = {
     name: '.profile__title',
-    job: '.profile__job'
+    about: '.profile__job',
+    avatar: '.profile__avatar'
   }
