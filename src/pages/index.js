@@ -11,7 +11,6 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import Api from '../components/Api.js';
 
 //vars
-import { initialCards } from '../utils/cards.js';
 import { containerSelector, templateSelector, imagePopupSelector, profilePopupSelector, placePopupSelector, avatarPopupSelector } from '../utils/selectors.js';
 import { settings, profileSelectors } from '../utils/settings.js';
 import { profileEditBtn, profilePopupForm, placeEditBtn, placePopupForm, avatarEditBtn, avatarPopupForm} from '../utils/constants.js';
@@ -39,7 +38,7 @@ const api = new Api({
 // ========================= POPUPS ==============================
 //PLACE
 const placePopup = new PopupWithForm(placePopupSelector, (data) => {
-  
+  api.setCard(data)
 });
 placePopup.setEventListeners();
 
@@ -84,7 +83,7 @@ placeEditBtn.addEventListener('click', () => {
 profileEditBtn.addEventListener('click', () => {
   profileValidation.resetValidation();
   profileValidation.disableSubmitButton();
-  profilePopup.setInputsValue(userInfo.getUserInfo());
+  //profilePopup.setInputsValue(userInfo.getUserInfo());
   profilePopup.open();
 });
 
@@ -105,7 +104,4 @@ Promise.all([userInfo.getUserInfo(), api.getCards()])
     })
 
     elementsContainer.setItems(cardsData);
-
-    console.log(userData)
-    console.log(cardsData)
   })
