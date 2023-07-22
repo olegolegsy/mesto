@@ -25,7 +25,6 @@ const api = new Api({
   headers: {
     authorization: '63e51c94-2a20-4ac4-b2ef-ac2b1cdb1198',
     'Content-Type': 'application/json'
-
 }});
 
 // ========================= POPUPS ==============================
