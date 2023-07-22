@@ -29,7 +29,9 @@ const api = new Api({
   // ========================= SECTION ==============================
   const elementsContainer = new Section({
     renderer: (cardObject) => {
-      const newCard = new Card(cardObject, templateSelector, imagePopup.open);
+      const newCard = new Card(cardObject, templateSelector, imagePopup.open, (element, liker) => {
+        
+      });
       elementsContainer.addItem(newCard.generateCard()); 
     }
   }
@@ -38,15 +40,18 @@ const api = new Api({
 // ========================= POPUPS ==============================
 //PLACE
 const placePopup = new PopupWithForm(placePopupSelector, (data) => {
-  api.setCard(data)
+  Promise.all([api.getUserInfo(), api.setCard(data)])
+    .then(([userData, cardData]) => {
+      cardData.idMy = userData._id;
+      elementsContainer.renderer(cardData);
+    })
 });
 placePopup.setEventListeners();
 
 //PROFILE
 const profilePopup = new PopupWithForm(profilePopupSelector, (data) => {
   api.setUserInfo(data)
-  .then(res => userInfo.setUserInfo(res))
-  .catch(err => console.error(`Ошибка: ${err}`))
+    .then(res => userInfo.setUserInfo(data))
 })
 profilePopup.setEventListeners();
 
@@ -57,10 +62,7 @@ imagePopup.setEventListeners();
 //AVATAR
 const avatarPopup = new PopupWithForm(avatarPopupSelector, (data) => {
   api.setAvatar(data)
-  .then((res) => {
-    userInfo.setUserInfo(res);
-  })
-  .catch(err => console.error(`Ошибка: ${err}`))
+    .then(res => userInfo.setUserAvatar(res))
 });
 avatarPopup.setEventListeners();
 
@@ -83,7 +85,7 @@ placeEditBtn.addEventListener('click', () => {
 profileEditBtn.addEventListener('click', () => {
   profileValidation.resetValidation();
   profileValidation.disableSubmitButton();
-  //profilePopup.setInputsValue(userInfo.getUserInfo());
+  profilePopup.setInputsValue(userInfo.getUserInfo());
   profilePopup.open();
 });
 
@@ -94,14 +96,14 @@ avatarEditBtn.addEventListener('click', () => {
 });
 
 // ========================= Api ==============================
-  
-Promise.all([userInfo.getUserInfo(), api.getCards()])
+
+Promise.all([api.getUserInfo(), api.getCards()])
   .then(([userData, cardsData]) => {
-    userInfo.setUserInfo(userData)
+    cardsData.forEach((card) => {
+      card.idMy = userData._id;
+    });
 
-    cardsData.forEach((cardObject) => {
-      cardObject.idMy = userData._id;
-    })
-
+    userInfo.setUserInfo(userData);
+    userInfo.setUserAvatar(userData);
     elementsContainer.setItems(cardsData);
   })
