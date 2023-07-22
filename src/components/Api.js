@@ -9,6 +9,7 @@ export default class Api {
        return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
     }
 
+// =========== getters ===========
     getUserInfo() {
         return fetch(`${this._url}/users/me`, {
             headers: {
@@ -23,5 +24,40 @@ export default class Api {
                 authorization: this._token
             }
         }).then(this._isOk)
+    }
+
+// =========== setters ===========
+    setUserInfo(data) {
+        return fetch(`${this._url}/users/me`, {
+            method: 'PATCH',
+            headers: this._headers, 
+            body: JSON.stringify({
+                name: data.name,
+                about: data.about
+            })
+        }).then(this._isOk)
+    }
+
+    setAvatar(data) {
+        return fetch(`${this._url}/users/me/avatar`, {
+            method: 'PATCH',
+            headers: this._headers, 
+            body: JSON.stringify({
+                avatar: data.avatar
+            })
+        })
+        .then(this._isOk)
+    }
+
+    setCard(data) {
+        return fetch(`${this._url}/cards`, {
+            method: 'POST',
+            headers: this._headers, 
+            body: JSON.stringify({
+                name: data.name,
+                link: data.link
+            })
+        })
+        .then(this._isOk)
     }
 }

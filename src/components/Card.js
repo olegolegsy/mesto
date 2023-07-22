@@ -1,7 +1,9 @@
 export default  class Card {
-    constructor(data, templateSelector, handleOpenPopup) {
-        this._name = data.name;
-        this._link = data.link;
+    constructor(cardObject, templateSelector, handleOpenPopup) {
+        this._name = cardObject.name;
+        this._link = cardObject.link;
+        this._idMy = cardObject._idMy;
+        this._id = cardObject.owner._id;
 
         this._templateSelector = templateSelector;
 
@@ -23,10 +25,11 @@ export default  class Card {
 
         this._elementImage = this._element.querySelector('.element__img');
         this._elementLikeBtn = this._element.querySelector('.element__like');
+        this._elementDeleteBtn = this._element.querySelector('.element__delete');
 
         this._elementImage.src = this._link;
         this._elementImage.alt = this._name;
-        this._element.querySelector('.element__title').textContent = this._title;
+        this._element.querySelector('.element__title').textContent = this._name;
 
         this._setEventListeners();
         return this._element;
@@ -46,12 +49,17 @@ export default  class Card {
             this._likeCard();
         });
 
-        this._element.querySelector('.element__delete').addEventListener('click', () => {
-            this._deleteCard();
-        });
-
         this._elementImage.addEventListener('click', () => {
             this._handleOpenPopup(this._name, this._link);
         });
+
+        if(this._idMy == this._id) {
+            this._elementDeleteBtn.addEventListener('click', () => {
+                this._deleteCard();
+            });
+        } else {
+            this._elementDeleteBtn.remove();
+            this._elementDeleteBtn = null;
+        }
     }
 }

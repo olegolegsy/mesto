@@ -12,9 +12,9 @@ import Api from '../components/Api.js';
 
 //vars
 import { initialCards } from '../utils/cards.js';
-import { containerSelector, templateSelector, imagePopupSelector, profilePopupSelector, placePopupSelector } from '../utils/selectors.js';
+import { containerSelector, templateSelector, imagePopupSelector, profilePopupSelector, placePopupSelector, avatarPopupSelector } from '../utils/selectors.js';
 import { settings, profileSelectors } from '../utils/settings.js';
-import { profileEditBtn, profilePopupForm, placeEditBtn, placePopupForm} from '../utils/constants.js';
+import { profileEditBtn, profilePopupForm, placeEditBtn, placePopupForm, avatarEditBtn, avatarPopupForm} from '../utils/constants.js';
 
 // ========================= OOP ==============================
 const userInfo = new UserInfo(profileSelectors);
@@ -27,16 +27,27 @@ const api = new Api({
     'Content-Type': 'application/json'
 }});
 
+  // ========================= SECTION ==============================
+  const elementsContainer = new Section({
+    renderer: (cardObject) => {
+      const newCard = new Card(cardObject, templateSelector, imagePopup.open);
+      elementsContainer.addItem(newCard.generateCard()); 
+    }
+  }
+  , containerSelector);
+
 // ========================= POPUPS ==============================
 //PLACE
 const placePopup = new PopupWithForm(placePopupSelector, (data) => {
-  elementsContainer.renderer(data);
+  
 });
 placePopup.setEventListeners();
 
 //PROFILE
 const profilePopup = new PopupWithForm(profilePopupSelector, (data) => {
-  userInfo.setUserInfo(data);
+  api.setUserInfo(data)
+  .then(res => userInfo.setUserInfo(res))
+  .catch(err => console.error(`Ошибка: ${err}`))
 })
 profilePopup.setEventListeners();
 
@@ -44,23 +55,24 @@ profilePopup.setEventListeners();
 const imagePopup = new PopupWithImage(imagePopupSelector);
 imagePopup.setEventListeners();
 
-// ========================= SECTION ==============================
-const elementsContainer = new Section({
-  items: initialCards,
-  renderer: (cardObject) => {
-    const newCard = new Card(cardObject, templateSelector, imagePopup.open);
-    elementsContainer.addItem(newCard.generateCard()); 
-  }
-}
-, containerSelector);
-elementsContainer.setItems();
+//AVATAR
+const avatarPopup = new PopupWithForm(avatarPopupSelector, (data) => {
+  api.setAvatar(data)
+  .then((res) => {
+    userInfo.setUserInfo(res);
+  })
+  .catch(err => console.error(`Ошибка: ${err}`))
+});
+avatarPopup.setEventListeners();
 
 // ========================= VALIDATORS ==============================
 const profileValidation = new FormValidator(settings, profilePopupForm);
 const placeValidation = new FormValidator(settings, placePopupForm);
+const avatarValidation = new FormValidator(settings, avatarPopupForm);
 
 profileValidation.enableValidation();
 placeValidation.enableValidation(); 
+avatarValidation.enableValidation();
 
 // ========================= LISTENERS ==============================
 placeEditBtn.addEventListener('click', () => {
@@ -76,4 +88,24 @@ profileEditBtn.addEventListener('click', () => {
   profilePopup.open();
 });
 
+avatarEditBtn.addEventListener('click', () => {
+  avatarValidation.resetValidation();
+  avatarValidation.disableSubmitButton();
+  avatarPopup.open();
+});
 
+// ========================= Api ==============================
+  
+Promise.all([userInfo.getUserInfo(), api.getCards()])
+  .then(([userData, cardsData]) => {
+    userInfo.setUserInfo(userData)
+
+    cardsData.forEach((cardObject) => {
+      cardObject.idMy = userData._id;
+    })
+
+    elementsContainer.setItems(cardsData);
+
+    console.log(userData)
+    console.log(cardsData)
+  })
