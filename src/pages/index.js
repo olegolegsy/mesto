@@ -29,9 +29,21 @@ const api = new Api({
   // ========================= SECTION ==============================
   const elementsContainer = new Section({
     renderer: (cardObject) => {
-      const newCard = new Card(cardObject, templateSelector, imagePopup.open, (element, liker) => {
+      const newCard = new Card(cardObject, templateSelector, imagePopup.open, 
+        (elementLike, idCard) => {
+          if(elementLike.classList.contains('element__like_active')) {
+            api.removeLike(idCard)
+              .then((res) => {
+                newCard.toggleLike(res);
+            })
+          } else {
+            api.addLike(idCard)
+              .then((res) => {
+                newCard.toggleLike(res);
+            })
+          }
+        });
         
-      });
       elementsContainer.addItem(newCard.generateCard()); 
     }
   }
@@ -106,4 +118,6 @@ Promise.all([api.getUserInfo(), api.getCards()])
     userInfo.setUserInfo(userData);
     userInfo.setUserAvatar(userData);
     elementsContainer.setItems(cardsData);
+
+    console.log(cardsData)
   })

@@ -1,5 +1,5 @@
 export default  class Card {
-    constructor(cardObject, templateSelector, handleOpenPopup, liker) {
+    constructor(cardObject, templateSelector, handleOpenPopup, handleLike) {
         this._name = cardObject.name;
         this._link = cardObject.link;
 
@@ -12,7 +12,7 @@ export default  class Card {
         this._templateSelector = templateSelector;
 
         this._handleOpenPopup = handleOpenPopup;
-        this._liker = liker;
+        this._handleLike = handleLike;
     }
 
     _getTemplate() {
@@ -41,23 +41,25 @@ export default  class Card {
         return this._element;
     }
 
+    _isLiked() {
+        this._likes.forEach((like) => {
+            if(like._id === this._idMy) {
+                this._elementLikeBtn.classList.add('element__like_active');
+                return
+            }
+        });
+    }
+
     _getLikes() {
         this._elementCounter.textContent = this._likes.length;
     }
 
-    _isLiked = () => {
-        const hasMyLike = (like) => {
-            return like === this._idMy;
-        }
-
-        if (this._likes.some(hasMyLike)) {
-            this._elementLikeBtn.classList.add('element__like_active')
-        }
+    toggleLike(res) {
+        this._likes = res.likes;
+        this._elementLikeBtn.classList.toggle('element__like_active');
+        this._getLikes();
     }
 
-    _handleLike = () => {
-        this._liker(this._idCard,);
-    }
 
     _deleteCard() {
         this._element.remove();
@@ -66,7 +68,7 @@ export default  class Card {
 
     _setEventListeners() {
         this._elementLikeBtn.addEventListener('click', () => {
-            this._likeCard();
+            this._handleLike(this._elementLikeBtn, this._idCard);
         });
 
         this._elementImage.addEventListener('click', () => {
