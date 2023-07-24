@@ -70,7 +70,7 @@ const profilePopup = new PopupWithForm(profilePopupSelector, (data) => {
   api.setUserInfo(data)
     .then(() => userInfo.setUserInfo(data))
     .catch(err => console.error(`Ошибка: ${err}`))
-    .finally(placePopup.buttonWait());
+    .finally(profilePopup.buttonWait());
 })
 profilePopup.setEventListeners();
 
@@ -83,7 +83,7 @@ const avatarPopup = new PopupWithForm(avatarPopupSelector, (data) => {
   api.setAvatar(data)
     .then(res => userInfo.setUserAvatar(res))
     .catch(err => console.error(`Ошибка: ${err}`))
-    .finally(placePopup.buttonWait());
+    .finally(avatarPopup.buttonWait());
 });
 avatarPopup.setEventListeners();
 
