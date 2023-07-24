@@ -52,14 +52,14 @@ export default  class Card {
         });
     }
 
-    _getLikes() {
+    _setLikes() {
         this._elementCounter.textContent = this._likes.length;
     }
 
     toggleLike(res) {
         this._likes = res.likes;
         this._elementLikeBtn.classList.toggle('element__like_active');
-        this._getLikes();
+        this._setLikes();
     }
 
 
@@ -86,7 +86,7 @@ export default  class Card {
             this._elementDeleteBtn = null;
         }
 
-        this._getLikes();
+        this._setLikes();
         this._isLiked();
     }
 }

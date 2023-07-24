@@ -55,10 +55,11 @@ const api = new Api({
 // ========================= POPUPS ==============================
 //PLACE
 const placePopup = new PopupWithForm(placePopupSelector, (data) => {
-  Promise.all([api.getUserInfo(), api.setCard(data)])
-    .then(([userData, cardData]) => {
-      cardData.idMy = userData._id;
-      elementsContainer.renderer(cardData);
+   api.setCard(data)
+    .then((res) => {
+      res.idMy = userInfo.id;
+      elementsContainer.renderer(res);
+      placePopup.close();
     })
     .catch(err => console.error(`Ошибка: ${err}`))
     .finally(placePopup.buttonWait());
@@ -68,7 +69,10 @@ placePopup.setEventListeners();
 //PROFILE
 const profilePopup = new PopupWithForm(profilePopupSelector, (data) => {
   api.setUserInfo(data)
-    .then(() => userInfo.setUserInfo(data))
+    .then(() => {
+      userInfo.setUserInfo(data)
+      profilePopup.close();
+    })
     .catch(err => console.error(`Ошибка: ${err}`))
     .finally(profilePopup.buttonWait());
 })
@@ -81,7 +85,10 @@ imagePopup.setEventListeners();
 //AVATAR
 const avatarPopup = new PopupWithForm(avatarPopupSelector, (data) => {
   api.setAvatar(data)
-    .then(res => userInfo.setUserAvatar(res))
+    .then(res => {
+      userInfo.setUserAvatar(res);
+      avatarPopup.close();
+    })
     .catch(err => console.error(`Ошибка: ${err}`))
     .finally(avatarPopup.buttonWait());
 });
@@ -92,6 +99,7 @@ const confirmPopup = new PopupWithConfirmButton(confirmPopupSelector, (card, idC
   api.removeCard(idCard)
     .then(() => {
       card.removeCard();
+      confirmPopup.close();
     })
     .catch(err => console.error(`Ошибка: ${err}`))
 });
@@ -134,6 +142,7 @@ Promise.all([api.getUserInfo(), api.getCards()])
       card.idMy = userData._id;
     });
 
+    userInfo.setId(userData._id);
     userInfo.setUserInfo(userData);
     userInfo.setUserAvatar(userData);
     elementsContainer.setItems(cardsData);
