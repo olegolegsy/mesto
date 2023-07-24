@@ -8,10 +8,11 @@ import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithConfirmButton from '../components/PopupWithConfirmButton.js';
 import Api from '../components/Api.js';
 
 //vars
-import { containerSelector, templateSelector, imagePopupSelector, profilePopupSelector, placePopupSelector, avatarPopupSelector } from '../utils/selectors.js';
+import { containerSelector, templateSelector, imagePopupSelector, profilePopupSelector, placePopupSelector, avatarPopupSelector, confirmPopupSelector } from '../utils/selectors.js';
 import { settings, profileSelectors } from '../utils/settings.js';
 import { profileEditBtn, profilePopupForm, placeEditBtn, placePopupForm, avatarEditBtn, avatarPopupForm} from '../utils/constants.js';
 
@@ -29,18 +30,20 @@ const api = new Api({
   // ========================= SECTION ==============================
   const elementsContainer = new Section({
     renderer: (cardObject) => {
-      const newCard = new Card(cardObject, templateSelector, imagePopup.open, 
+      const newCard = new Card(cardObject, templateSelector, imagePopup.open, confirmPopup.open,
         (elementLike, idCard) => {
           if(elementLike.classList.contains('element__like_active')) {
             api.removeLike(idCard)
               .then((res) => {
                 newCard.toggleLike(res);
             })
+            .catch(err => console.error(`Ошибка: ${err}`))
           } else {
             api.addLike(idCard)
               .then((res) => {
                 newCard.toggleLike(res);
             })
+            .catch(err => console.error(`Ошибка: ${err}`))
           }
         });
         
@@ -57,13 +60,17 @@ const placePopup = new PopupWithForm(placePopupSelector, (data) => {
       cardData.idMy = userData._id;
       elementsContainer.renderer(cardData);
     })
+    .catch(err => console.error(`Ошибка: ${err}`))
+    .finally(placePopup.buttonWait());
 });
 placePopup.setEventListeners();
 
 //PROFILE
 const profilePopup = new PopupWithForm(profilePopupSelector, (data) => {
   api.setUserInfo(data)
-    .then(res => userInfo.setUserInfo(data))
+    .then(() => userInfo.setUserInfo(data))
+    .catch(err => console.error(`Ошибка: ${err}`))
+    .finally(placePopup.buttonWait());
 })
 profilePopup.setEventListeners();
 
@@ -75,8 +82,20 @@ imagePopup.setEventListeners();
 const avatarPopup = new PopupWithForm(avatarPopupSelector, (data) => {
   api.setAvatar(data)
     .then(res => userInfo.setUserAvatar(res))
+    .catch(err => console.error(`Ошибка: ${err}`))
+    .finally(placePopup.buttonWait());
 });
 avatarPopup.setEventListeners();
+
+//CONFIRM
+const confirmPopup = new PopupWithConfirmButton(confirmPopupSelector, (card, idCard) => {
+  api.removeCard(idCard)
+    .then(() => {
+      card.removeCard();
+    })
+    .catch(err => console.error(`Ошибка: ${err}`))
+});
+confirmPopup.setEventListeners();
 
 // ========================= VALIDATORS ==============================
 const profileValidation = new FormValidator(settings, profilePopupForm);
@@ -118,6 +137,5 @@ Promise.all([api.getUserInfo(), api.getCards()])
     userInfo.setUserInfo(userData);
     userInfo.setUserAvatar(userData);
     elementsContainer.setItems(cardsData);
-
-    console.log(cardsData)
   })
+  .catch(err => console.error(`Ошибка: ${err}`))

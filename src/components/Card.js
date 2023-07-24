@@ -1,5 +1,5 @@
 export default  class Card {
-    constructor(cardObject, templateSelector, handleOpenPopup, handleLike) {
+    constructor(cardObject, templateSelector, handleOpenPopup, handleConfirmPopup, handleLike) {
         this._name = cardObject.name;
         this._link = cardObject.link;
 
@@ -12,6 +12,7 @@ export default  class Card {
         this._templateSelector = templateSelector;
 
         this._handleOpenPopup = handleOpenPopup;
+        this._handleConfirmPopup = handleConfirmPopup;
         this._handleLike = handleLike;
     }
 
@@ -38,6 +39,7 @@ export default  class Card {
         this._element.querySelector('.element__title').textContent = this._name;
 
         this._setEventListeners();
+        
         return this._element;
     }
 
@@ -61,7 +63,7 @@ export default  class Card {
     }
 
 
-    _deleteCard() {
+    removeCard() {
         this._element.remove();
         this._element = null;
     }
@@ -77,7 +79,7 @@ export default  class Card {
 
         if(this._idMy === this._id) {
             this._elementDeleteBtn.addEventListener('click', () => {
-                this._deleteCard();
+                this._handleConfirmPopup(this, this._idCard);
             });
         } else {
             this._elementDeleteBtn.remove();

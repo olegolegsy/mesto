@@ -9,6 +9,15 @@ export default class Api {
        return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
     }
 
+    removeCard(idCard) {
+        return fetch(`${this._url}/cards/${idCard}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: this._token
+            }
+        }).then(this._isOk)
+    }
+
 // =========== getters ===========
     getUserInfo() {
         return fetch(`${this._url}/users/me`, {
@@ -61,7 +70,6 @@ export default class Api {
         .then(this._isOk)
     }
 // =========== handleLike ===========
-
     addLike(idCard) {
         return fetch(`${this._url}/cards/${idCard}/likes`, {
             method: 'PUT',
